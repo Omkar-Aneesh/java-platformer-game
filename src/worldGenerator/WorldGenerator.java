@@ -10,6 +10,7 @@ public class WorldGenerator {
     GamePanel gp;
 
     public int existingColumnsInWorld = 0;
+    public int existingCols = existingColumnsInWorld;
     public int maxColumnsPerCall = 100;
     public int limitCol = 0;
 
@@ -37,6 +38,7 @@ public class WorldGenerator {
         try {
             Scanner reader = new Scanner(tile_data);
             existingColumnsInWorld = Integer.parseInt(reader.nextLine().replace("existing_world_columns_in_world_map: ", ""));
+            existingCols = existingColumnsInWorld;
         } catch (IOException e){e.printStackTrace();}
     }
     public void set(){
@@ -106,6 +108,24 @@ public class WorldGenerator {
             }
         } catch (Exception e){
             e.printStackTrace();
+        }
+    }
+    public void generateLeftWorld(){
+        existingColumnsInWorld = 0;
+        generateWorld();
+        pushExistingDataToList();
+    }
+    public void pushExistingDataToList(){
+        getExistingColumnsInWorld();
+        int col = 100;
+        int row = 0;
+        while (row < gp.maxWorldRow){
+            mapTileNum[col][row] = gp.tileM.mapTileNum[gp.currentMap][col - 100][row];
+            col ++;
+            if (col >= existingColumnsInWorld){
+                row ++;
+                col = 0;
+            }
         }
     }
     public void generateWorld(){
