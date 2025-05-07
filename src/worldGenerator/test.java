@@ -7,5 +7,6 @@ public class test {
         GamePanel gp = new GamePanel();
         WorldGenerator worldGenerator = new WorldGenerator(gp);
         worldGenerator.generateWorld();
+//        worldGenerator.generateLeftWorld();
     }
 }

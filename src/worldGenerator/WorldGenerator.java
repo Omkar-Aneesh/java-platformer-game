@@ -111,16 +111,43 @@ public class WorldGenerator {
         }
     }
     public void generateLeftWorld(){
+        File tile_data = new File("res/data/platformer/world/world_data.txt");
+        try {
+            Scanner reader = new Scanner(tile_data);
+            existingColumnsInWorld = Integer.parseInt(reader.nextLine().replace("existing_world_columns_in_world_map: ", ""));
+            limitCol = existingColumnsInWorld + maxColumnsPerCall;
+            mapTileNum = new int[existingColumnsInWorld + maxColumnsPerCall][gp.maxWorldRow];
+        } catch (IOException e){e.printStackTrace();}
+
         existingColumnsInWorld = 0;
-        generateWorld();
+        generateLastLayer();
+        generateStoneLayer();
+        generateDirtLayer();
+        generateTransparentLayer();
+        generateMountains();
+        generateGrassLayer();
+        int col = 0;
+        int row = 0;
+        existingColumnsInWorld = 100;
+        while (row < gp.maxWorldRow){
+            System.out.print(mapTileNum[col][row]);
+            col ++;
+            if (col >= existingColumnsInWorld){
+                col = 0;
+                row ++;
+                System.out.println();
+            }
+        }
         pushExistingDataToList();
+        saveWorldMap();
     }
     public void pushExistingDataToList(){
         getExistingColumnsInWorld();
-        int col = 100;
+        int col = 0;
         int row = 0;
         while (row < gp.maxWorldRow){
-            mapTileNum[col][row] = gp.tileM.mapTileNum[gp.currentMap][col - 100][row];
+            System.out.println(col);
+            mapTileNum[col + 100][row] = gp.tileM.mapTileNum[gp.currentMap][col][row];
             col ++;
             if (col >= existingColumnsInWorld){
                 row ++;
@@ -404,6 +431,7 @@ public class WorldGenerator {
             FileWriter fwriter = new FileWriter("res/data/platformer/world/world_data.txt");
             int colsInWorld = existingColumnsInWorld + maxColumnsPerCall;
             fwriter.write("existing_world_columns_in_world_map: " + colsInWorld);
+            System.out.println(existingColumnsInWorld + maxColumnsPerCall);
             file2.close();
             fwriter.close();
         } catch (IOException e){
