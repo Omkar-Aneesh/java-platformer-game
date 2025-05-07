@@ -36,7 +36,7 @@ public class Player extends Entity{
         solidArea.height = gp.tileSize - ((16 / 3) * gp.crystaler);
 
         JumpLoss = 1;
-        JumpStrength = 40;
+        JumpStrength = 20;
         DefaultJumpStrength = JumpStrength;
 
         direction = "left";
