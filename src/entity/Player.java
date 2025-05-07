@@ -106,7 +106,7 @@ public class Player extends Entity{
         }
         if (worldX / gp.tileSize == 20){
             gp.wGenerator.generateLeftWorld();
-//            gp.loadWorldData();
+            gp.loadWorldData();
             worldX += gp.tileSize * 100;
         }
 //        System.out.println(worldY / gp.tileSize + " " + worldX / gp.tileSize + " " + gp.maxWorldCol);
